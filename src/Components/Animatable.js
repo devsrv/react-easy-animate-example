@@ -51,13 +51,15 @@ export default class Animatable extends PureComponent {
 
     handleEntryAnimationEnd = () => {
         this.wrapperRef.current.removeEventListener('animationend', this.handleEntryAnimationEnd);
-        this.props.afterEntryAnimationEnd();
+
+        if(this.props.afterEntryAnimationEnd) this.props.afterEntryAnimationEnd();
     }
 
     handleExitAnimationEnd = () => {
         this.wrapperRef.current.removeEventListener('animationend', this.handleExitAnimationEnd);
-        this.props.afterExitAnimationEnd();
         this.setState({show: false});
+        
+        if(this.props.afterExitAnimationEnd) this.props.afterExitAnimationEnd();
     }
 
     render() {
