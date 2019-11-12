@@ -11,6 +11,23 @@ export default class Animatable extends PureComponent {
         show: true
     }
 
+    allocateAnimationClasses = (classesInp, action = "ADD") => {
+        const targetElem = this.wrapperRef.current;
+
+        switch (action) {
+            case "ADD":
+                classesInp.split(" ").forEach((className) => {
+                    targetElem.classList.add(className);
+                });
+                break;
+        
+            default:
+                classesInp.split(" ").forEach((className) => {
+                    targetElem.classList.remove(className);
+                });
+        }
+    }
+
     componentDidUpdate(prevProps, prevState) {
         const targetElem = this.wrapperRef.current;
 
@@ -18,20 +35,17 @@ export default class Animatable extends PureComponent {
 
         if(prevProps.shouldShow && ! shouldShow) {
             if(targetElem) {
-                targetElem.classList.remove(entryAnimation);
-                targetElem.classList.add(exitAnimation, 'faster');
+                this.allocateAnimationClasses(entryAnimation, "REMOVE");
+
+                this.allocateAnimationClasses(exitAnimation, "ADD");
                 
                 targetElem.addEventListener('animationend', this.handleExitAnimationEnd);
             }
         }
 
-        if(! prevProps.shouldShow && shouldShow) {
-            this.setState({show: true});
-        }
+        if(! prevProps.shouldShow && shouldShow) this.setState({show: true});
 
-        if(! prevState.show && this.state.show) {
-            targetElem.addEventListener('animationend', this.handleEntryAnimationEnd);
-        }
+        if(! prevState.show && this.state.show) targetElem.addEventListener('animationend', this.handleEntryAnimationEnd);
         
     }
 

@@ -13,8 +13,8 @@ export default class Main extends Component {
                 <div className="col">
                     <Animatable 
                         shouldShow={this.state.show}
-                        entryAnimation="zoomInLeft"
-                        exitAnimation="zoomOutDown"
+                        entryAnimation="zoomInDown"
+                        exitAnimation="zoomOutDown faster"
                         afterExitAnimationEnd={() => console.log('exit animation complete')}
                         afterEntryAnimationEnd={() => console.log('entry animation complete')}
                     >
