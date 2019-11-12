@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 require("animate.css");
 
-export default class Animatable extends Component {
+export default class Animatable extends PureComponent {
     constructor(props) {
         super(props);
-        this.cardRef = React.createRef();
+        this.wrapperRef = React.createRef();
     }
 
     state = {
@@ -12,7 +12,7 @@ export default class Animatable extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const targetElem = this.cardRef.current;
+        const targetElem = this.wrapperRef.current;
 
         const { shouldShow, entryAnimation, exitAnimation } = this.props;
 
@@ -21,25 +21,35 @@ export default class Animatable extends Component {
                 targetElem.classList.remove(entryAnimation);
                 targetElem.classList.add(exitAnimation, 'faster');
                 
-                targetElem.addEventListener('animationend', this.handleAnimationEnd);
+                targetElem.addEventListener('animationend', this.handleExitAnimationEnd);
             }
         }
 
         if(! prevProps.shouldShow && shouldShow) {
             this.setState({show: true});
         }
+
+        if(! prevState.show && this.state.show) {
+            targetElem.addEventListener('animationend', this.handleEntryAnimationEnd);
+        }
         
     }
 
-    handleAnimationEnd = () => {
-        this.cardRef.current.removeEventListener('animationend', this.handleAnimationEnd);
+    handleEntryAnimationEnd = () => {
+        this.wrapperRef.current.removeEventListener('animationend', this.handleEntryAnimationEnd);
+        this.props.afterEntryAnimationEnd();
+    }
+
+    handleExitAnimationEnd = () => {
+        this.wrapperRef.current.removeEventListener('animationend', this.handleExitAnimationEnd);
+        this.props.afterExitAnimationEnd();
         this.setState({show: false});
     }
 
     render() {
         return (
             this.state.show &&
-            <div className={`animated ${this.props.entryAnimation}`} ref={this.cardRef}>
+            <div className={`animated ${this.props.entryAnimation}`} ref={this.wrapperRef}>
                 {this.props.children}
             </div>
         )

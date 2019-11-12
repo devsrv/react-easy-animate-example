@@ -15,6 +15,8 @@ export default class Main extends Component {
                         shouldShow={this.state.show}
                         entryAnimation="zoomInLeft"
                         exitAnimation="zoomOutDown"
+                        afterExitAnimationEnd={() => console.log('exit animation complete')}
+                        afterEntryAnimationEnd={() => console.log('entry animation complete')}
                     >
                         <div className="card" style={{width: '22rem', boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                             <img src={cardImg} className="card-img-top" alt="" />
