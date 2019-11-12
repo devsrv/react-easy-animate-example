@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+require("animate.css");
 
 export default class Animatable extends Component {
     constructor(props) {
