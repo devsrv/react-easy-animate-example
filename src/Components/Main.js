@@ -4,7 +4,8 @@ import Animatable from './Animatable';
 
 export default class Main extends Component {
     state = {
-        show: true
+        show: true,
+        disabled: false
     }
 
     render() {
@@ -14,9 +15,9 @@ export default class Main extends Component {
                     <Animatable 
                         shouldShow={this.state.show}
                         // entryAnimation="zoomInDown"
-                        // exitAnimation="zoomOutDown faster"
-                        // afterExitAnimationEnd={() => console.log('exit animation complete')}
-                        // afterEntryAnimationEnd={() => console.log('entry animation complete')}
+                        exitAnimation="zoomOutDown faster"
+                        afterExitAnimationEnd={() => this.setState({disabled: false})}
+                        afterEntryAnimationEnd={() => this.setState({disabled: false})}
                     >
                         <div className="card" style={{width: '22rem', boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                             <img src={cardImg} className="card-img-top" alt="" />
@@ -40,7 +41,7 @@ export default class Main extends Component {
                     </Animatable>
                 </div>
                 <div className="col">
-                    <button className="btn btn-primary" type="button" onClick={() => this.setState((state) => ({show: !state.show}))}>Click</button>
+                    <button className="btn btn-primary" type="button" disabled={this.state.disabled} onClick={() => this.setState((state) => ({show: !state.show, disabled: true}))}>{this.state.show? "HIDE" : "SHOW"}</button>
                 </div>
             </div>
         )
