@@ -7,13 +7,11 @@ export default class Animatable extends Component {
     }
 
     state = {
-        shouldShow: true,
         show: true
     }
 
     componentDidUpdate(prevProps, prevState) {
         const targetElem = this.cardRef.current;
-        const reactThis = this;
 
         const { shouldShow, entryAnimation, exitAnimation } = this.props;
 
@@ -22,9 +20,7 @@ export default class Animatable extends Component {
                 targetElem.classList.remove(entryAnimation);
                 targetElem.classList.add(exitAnimation, 'faster');
                 
-                targetElem.addEventListener('animationend', function() { 
-                    reactThis.setState({show: false});
-                });
+                targetElem.addEventListener('animationend', this.handleAnimationEnd);
             }
         }
 
@@ -34,12 +30,22 @@ export default class Animatable extends Component {
         
     }
 
+    handleAnimationEnd = () => {
+        this.cardRef.current.removeEventListener('animationend', this.handleAnimationEnd);
+        this.setState({show: false});
+    }
+
     render() {
         return (
             this.state.show &&
-            <div className="animated zoomIn fast" ref={this.cardRef}>
+            <div className={`animated ${this.props.entryAnimation}`} ref={this.cardRef}>
                 {this.props.children}
             </div>
         )
     }
 }
+
+Animatable.defaultProps = {
+    entryAnimation: 'zoomIn',
+    exitAnimation: 'zoomOut'
+};
