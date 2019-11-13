@@ -15,10 +15,14 @@ export default class Main extends Component {
                 <div className="col">
                     <Animatable 
                         show={this.state.show}
-                        // entryAnimation="zoomInDown"
+                        // entryAnimation={["zoomInDown"]}
                         exitAnimation={["zoomOutDown", "faster"]}
                         onExitAnimationEnd={() => this.setState({disabled: false})}
                         onEntryAnimationEnd={() => this.setState({disabled: false})}
+                        // entryAnimDelay="2s"
+                        // entryAnimDuration="5s"
+                        // // exitAnimDelay="2s"
+                        // exitAnimDuration="2s"
                     >
                         <div className="card" style={{width: '22rem', boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                             <img src={cardImg} className="card-img-top" alt="" />

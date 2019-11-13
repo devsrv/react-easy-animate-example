@@ -8,7 +8,8 @@ export default class Animatable extends PureComponent {
     }
 
     state = {
-        show: true
+        show: true,
+        animationProperties: {}
     }
 
     allocateAnimationClasses = (classesInp, action = "ADD") => {
@@ -28,22 +29,46 @@ export default class Animatable extends PureComponent {
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            animationProperties: {
+                animationDuration: this.props.entryAnimDuration,
+                animationDelay: this.props.entryAnimDelay
+            }
+        });
+    }
+
     componentDidUpdate(prevProps, prevState) {
         const targetElem = this.wrapperRef.current;
 
-        const { show, entryAnimation, exitAnimation } = this.props;
+        const { show, entryAnimation, exitAnimation, entryAnimDelay, entryAnimDuration, exitAnimDelay, exitAnimDuration } = this.props;
 
         if(prevProps.show && ! show) {
             if(targetElem) {
                 this.allocateAnimationClasses(entryAnimation, "REMOVE");
 
                 this.allocateAnimationClasses(exitAnimation, "ADD");
+
+                this.setState({
+                    animationProperties: {
+                        animationDuration: exitAnimDuration,
+                        animationDelay: exitAnimDelay
+                    }
+                });
                 
                 targetElem.addEventListener('animationend', this.handleExitAnimationEnd);
             }
         }
 
-        if(! prevProps.show && show) this.setState({show: true});
+        if(! prevProps.show && show) { 
+            this.setState({
+                show: true,
+                animationProperties: {
+                    animationDuration: entryAnimDuration,
+                    animationDelay: entryAnimDelay
+                }
+            });
+        }
 
         if(! prevState.show && this.state.show) targetElem.addEventListener('animationend', this.handleEntryAnimationEnd);
         
@@ -65,7 +90,11 @@ export default class Animatable extends PureComponent {
     render() {
         return (
             this.state.show &&
-            <div className={`animated ${this.props.entryAnimation}`} ref={this.wrapperRef}>
+            <div 
+                className={`animated ${this.props.entryAnimation.join(" ")}`}
+                ref={this.wrapperRef}
+                style={this.state.animationProperties}
+            >
                 {this.props.children}
             </div>
         )
@@ -83,5 +112,27 @@ Animatable.propTypes = {
     exitAnimation: PropTypes.array,
     onExitAnimationEnd: PropTypes.func,
     onEntryAnimationEnd: PropTypes.func,
+    entryAnimDelay: animTimeInputCheck,
+    entryAnimDuration: animTimeInputCheck,
+    exitAnimDelay: animTimeInputCheck,
+    exitAnimDuration: animTimeInputCheck,
     children: PropTypes.element.isRequired
 };
+
+function animTimeInputCheck (props, propName, componentName) {
+    if (typeof props[propName] === 'undefined') {
+        return;
+    }
+
+    if (!/^\-?(\d)+(s|ms){1}$/.test(props[propName])) {
+        let check;
+
+        if(propName === "entryAnimDelay" || propName === "exitAnimDelay" ) check = "check css `animation-delay` property";
+        else check = "check css `animation-duration` property";
+
+      return new Error(
+        'Invalid prop `' + propName + '` supplied to' +
+        ' `' + componentName + '`. '+ check +'. positive examples - 1s, 2s, -2s, 5ms etc.'
+      );
+    }
+}
