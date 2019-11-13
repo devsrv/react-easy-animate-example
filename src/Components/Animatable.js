@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Animatable extends PureComponent {
     constructor(props) {
@@ -15,13 +16,13 @@ export default class Animatable extends PureComponent {
 
         switch (action) {
             case "ADD":
-                classesInp.split(" ").forEach((className) => {
+                classesInp.forEach((className) => {
                     targetElem.classList.add(className);
                 });
                 break;
         
             default:
-                classesInp.split(" ").forEach((className) => {
+                classesInp.forEach((className) => {
                     targetElem.classList.remove(className);
                 });
         }
@@ -72,6 +73,15 @@ export default class Animatable extends PureComponent {
 }
 
 Animatable.defaultProps = {
-    entryAnimation: 'zoomIn',
-    exitAnimation: 'zoomOut'
+    entryAnimation: ['zoomIn'],
+    exitAnimation: ['zoomOut']
+};
+
+Animatable.propTypes = {
+    show: PropTypes.bool,
+    entryAnimation: PropTypes.array,
+    exitAnimation: PropTypes.array,
+    onExitAnimationEnd: PropTypes.func,
+    onEntryAnimationEnd: PropTypes.func,
+    children: PropTypes.element.isRequired
 };

@@ -16,7 +16,7 @@ export default class Main extends Component {
                     <Animatable 
                         show={this.state.show}
                         // entryAnimation="zoomInDown"
-                        exitAnimation="zoomOutDown faster"
+                        exitAnimation={["zoomOutDown", "faster"]}
                         onExitAnimationEnd={() => this.setState({disabled: false})}
                         onEntryAnimationEnd={() => this.setState({disabled: false})}
                     >
