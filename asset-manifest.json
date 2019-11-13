@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react-easy-animate-example/static/css/main.a75ec479.chunk.css",
+    "main.js": "/react-easy-animate-example/static/js/main.60d3dc29.chunk.js",
+    "main.js.map": "/react-easy-animate-example/static/js/main.60d3dc29.chunk.js.map",
+    "runtime-main.js": "/react-easy-animate-example/static/js/runtime-main.2b61f0d7.js",
+    "runtime-main.js.map": "/react-easy-animate-example/static/js/runtime-main.2b61f0d7.js.map",
+    "static/css/2.ff29e5f6.chunk.css": "/react-easy-animate-example/static/css/2.ff29e5f6.chunk.css",
+    "static/js/2.89299630.chunk.js": "/react-easy-animate-example/static/js/2.89299630.chunk.js",
+    "static/js/2.89299630.chunk.js.map": "/react-easy-animate-example/static/js/2.89299630.chunk.js.map",
+    "index.html": "/react-easy-animate-example/index.html",
+    "precache-manifest.dd58626cd4937cf3cf957b4d78fbedd6.js": "/react-easy-animate-example/precache-manifest.dd58626cd4937cf3cf957b4d78fbedd6.js",
+    "service-worker.js": "/react-easy-animate-example/service-worker.js",
+    "static/css/2.ff29e5f6.chunk.css.map": "/react-easy-animate-example/static/css/2.ff29e5f6.chunk.css.map",
+    "static/css/main.a75ec479.chunk.css.map": "/react-easy-animate-example/static/css/main.a75ec479.chunk.css.map",
+    "static/media/close-up-of-leaf.jpg": "/react-easy-animate-example/static/media/close-up-of-leaf.a05280c9.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2b61f0d7.js",
+    "static/css/2.ff29e5f6.chunk.css",
+    "static/js/2.89299630.chunk.js",
+    "static/css/main.a75ec479.chunk.css",
+    "static/js/main.60d3dc29.chunk.js"
+  ]
+}
