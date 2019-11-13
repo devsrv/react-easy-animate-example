@@ -124,7 +124,7 @@ function animTimeInputCheck (props, propName, componentName) {
         return;
     }
 
-    if (!/^\-?(\d)+(s|ms){1}$/.test(props[propName])) {
+    if (!/^\-?(([0-9]*[.])?\d)+(s|ms){1}$/.test(props[propName])) {
         let check;
 
         if(propName === "entryAnimDelay" || propName === "exitAnimDelay" ) check = "check css `animation-delay` property";

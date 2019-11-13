@@ -28,7 +28,9 @@ export default class Main extends Component {
                             <img src={cardImg} className="card-img-top" alt="" />
                             <div className="card-body">
                                 <h5 className="card-title">Our Changing Planet</h5>
-                                <h6 className="card-subtitle mb-2 text-muted py-2" style={{fontSize: '95%'}}>by Kurt Wagner</h6>
+                                <Animatable entryAnimDelay="1s" show={this.state.show}>
+                                    <h6 className="card-subtitle mb-2 text-muted py-2" style={{fontSize: '95%'}}>by Kurt Wagner</h6>
+                                </Animatable>
                                 <p className="card-text text-muted">
                                     Visit ten places on our planet that are undergoing the biggest changes today.
                                 </p>
