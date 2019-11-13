@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-require("animate.css");
 
 export default class Animatable extends PureComponent {
     constructor(props) {
@@ -31,9 +30,9 @@ export default class Animatable extends PureComponent {
     componentDidUpdate(prevProps, prevState) {
         const targetElem = this.wrapperRef.current;
 
-        const { shouldShow, entryAnimation, exitAnimation } = this.props;
+        const { show, entryAnimation, exitAnimation } = this.props;
 
-        if(prevProps.shouldShow && ! shouldShow) {
+        if(prevProps.show && ! show) {
             if(targetElem) {
                 this.allocateAnimationClasses(entryAnimation, "REMOVE");
 
@@ -43,7 +42,7 @@ export default class Animatable extends PureComponent {
             }
         }
 
-        if(! prevProps.shouldShow && shouldShow) this.setState({show: true});
+        if(! prevProps.show && show) this.setState({show: true});
 
         if(! prevState.show && this.state.show) targetElem.addEventListener('animationend', this.handleEntryAnimationEnd);
         
@@ -52,14 +51,14 @@ export default class Animatable extends PureComponent {
     handleEntryAnimationEnd = () => {
         this.wrapperRef.current.removeEventListener('animationend', this.handleEntryAnimationEnd);
 
-        if(this.props.afterEntryAnimationEnd) this.props.afterEntryAnimationEnd();
+        if(this.props.onEntryAnimationEnd) this.props.onEntryAnimationEnd();
     }
 
     handleExitAnimationEnd = () => {
         this.wrapperRef.current.removeEventListener('animationend', this.handleExitAnimationEnd);
         this.setState({show: false});
         
-        if(this.props.afterExitAnimationEnd) this.props.afterExitAnimationEnd();
+        if(this.props.onExitAnimationEnd) this.props.onExitAnimationEnd();
     }
 
     render() {

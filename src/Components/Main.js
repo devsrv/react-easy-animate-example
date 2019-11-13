@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cardImg from './../close-up-of-leaf.jpg'
 import Animatable from './Animatable';
+require("animate.css");
 
 export default class Main extends Component {
     state = {
@@ -13,11 +14,11 @@ export default class Main extends Component {
             <div className="row mt-5">
                 <div className="col">
                     <Animatable 
-                        shouldShow={this.state.show}
+                        show={this.state.show}
                         // entryAnimation="zoomInDown"
                         exitAnimation="zoomOutDown faster"
-                        afterExitAnimationEnd={() => this.setState({disabled: false})}
-                        afterEntryAnimationEnd={() => this.setState({disabled: false})}
+                        onExitAnimationEnd={() => this.setState({disabled: false})}
+                        onEntryAnimationEnd={() => this.setState({disabled: false})}
                     >
                         <div className="card" style={{width: '22rem', boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                             <img src={cardImg} className="card-img-top" alt="" />
